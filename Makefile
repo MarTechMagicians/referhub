@@ -31,3 +31,6 @@ fresh:
 
 test: .updateQaImage
 	docker run --rm -it -v ${PWD}:/app -w /app ${PHP_QA_IMAGE} composer run test
+
+phpstan: .updateQaImage
+	docker run --rm -it -v ${PWD}:/app -w /app ${PHP_QA_IMAGE} composer run phpstan
