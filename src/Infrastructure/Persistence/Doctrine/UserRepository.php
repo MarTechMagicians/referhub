@@ -21,6 +21,12 @@ class UserRepository extends ServiceEntityRepository implements \App\Domain\User
         parent::__construct($registry, User::class);
     }
 
+    public function save(User $user): void
+    {
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
+    }
+
     //    /**
     //     * @return User[] Returns an array of User objects
     //     */
