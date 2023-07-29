@@ -17,13 +17,22 @@ logs:
 clean:
 	docker-compose down --rmi all --remove-orphans
 
+db-drop:
+	docker-compose exec php sh -c "./bin/console doctrine:database:drop -f --if-exists"
+
+db-create:
+	docker-compose exec php sh -c "./bin/console doctrine:database:create"
+
+db-migrate:
+	docker-compose exec php sh -c "./bin/console doctrine:migrations:migrate"
+
 fresh:
 	$(MAKE) clean
 	$(MAKE) build
 	$(MAKE) up
-	docker-compose exec php sh -c "./bin/console doctrine:database:drop -f --if-exists"
-	docker-compose exec php sh -c "./bin/console doctrine:database:create"
-	docker-compose exec php sh -c "./bin/console doctrine:migrations:migrate"
+	$(MAKE) db-drop
+	$(MAKE) db-create
+	$(MAKE) db-migrate
 
 .updateQaImage:
 	docker pull ${PHP_QA_IMAGE}

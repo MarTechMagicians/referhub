@@ -14,10 +14,7 @@ ReferHub is a modular and composable referral software designed to generate and 
 
 ### Requirements
 
-- PHP 8.2 or higher
-- MySQL or PostgreSQL
-- Composer
-- (Optional) Docker
+- Docker (required to run the project)
 
 ### Steps
 
@@ -31,21 +28,26 @@ ReferHub is a modular and composable referral software designed to generate and 
    cd referhub
    ```
 
-3. **Install Dependencies:**
+3. **Configure Environment Variables:** Copy the `.env` file to the `.env.local` file with your database and other configurations.
+
+4. **Build the Project:**
    ```bash
-   composer install
+   make build
    ```
 
-4. **Configure Environment Variables:** Edit the `.env` file with your database and other configurations.
-
-5. **Run Migrations:**
+5. **Run the containers :**
    ```bash
-   php bin/console doctrine:migrations:migrate
+   make up
    ```
 
-6. **Start the Development Server:**
+6. **Create the db:**
    ```bash
-   symfony server:start
+   make db-create
+   ```
+
+7. **Run db migrations:**
+   ```bash
+   make db-migrate
    ```
 
 ## Usage
