@@ -29,4 +29,12 @@ class UserService
 
         return $user;
     }
+
+    /**
+     * @return User[]
+     */
+    public function getAll(): array
+    {
+        return $this->userRepository->findAll();
+    }
 }

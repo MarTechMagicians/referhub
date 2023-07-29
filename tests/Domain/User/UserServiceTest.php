@@ -25,7 +25,7 @@ class UserServiceTest extends TestCase
         $userRepository = $this->getMockBuilder(UserRepository::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['findOneBy', 'save'])
-            ->getMock();
+            ->getMockForAbstractClass();
         $userRepository
             ->expects($this->once())
             ->method('findOneBy')
@@ -48,7 +48,7 @@ class UserServiceTest extends TestCase
         $userRepository = $this->getMockBuilder(UserRepository::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['save', 'findOneBy'])
-            ->getMock();
+            ->getMockForAbstractClass();
         $userRepository
             ->expects($this->once())
             ->method('save')
@@ -57,5 +57,25 @@ class UserServiceTest extends TestCase
         $userService = new UserService($userRepository);
         $actualUser = $userService->create($createUser);
         $this->assertEquals($user, $actualUser);
+    }
+
+    public function testListUsersSuccessfully(): void
+    {
+        $user1 = new User();
+        $user2 = new User();
+
+        $userRepository = $this->getMockBuilder(UserRepository::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['findAll'])
+            ->getMockForAbstractClass();
+
+        $userRepository
+            ->expects($this->once())
+            ->method('findAll')
+            ->willReturn([$user1, $user2]);
+
+        $userService = new UserService($userRepository);
+        $expectedResults = [$user1, $user2];
+        $this->assertEquals($expectedResults, $userService->getAll());
     }
 }

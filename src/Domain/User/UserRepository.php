@@ -15,4 +15,9 @@ interface UserRepository
      * @return ?User
      */
     public function findOneBy(array $criteria, array $orderBy = null);
+
+    /**
+     * @return User[]
+     */
+    public function findAll();
 }
