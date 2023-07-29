@@ -28,6 +28,9 @@ class Event
     #[ORM\JoinColumn(nullable: false)]
     private ?User $creatorUser = null;
 
+    /**
+     * @var array<mixed>
+     */
     #[ORM\Column]
     private array $eventData = [];
 
@@ -82,11 +85,19 @@ class Event
         $this->creatorUser = $creatorUser;
     }
 
+    /**
+     * @return array<mixed>
+     */
     public function getEventData(): array
     {
         return $this->eventData;
     }
 
+    /**
+     * @param array<mixed> $eventData
+     *
+     * @return $this
+     */
     public function setEventData(array $eventData): static
     {
         $this->eventData = $eventData;
