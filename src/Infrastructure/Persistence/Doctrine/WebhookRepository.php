@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository;
+namespace App\Infrastructure\Persistence\Doctrine;
 
-use App\Entity\Webhook;
+use App\Domain\Webhook\Entity\Webhook;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -14,7 +14,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Webhook[]    findAll()
  * @method Webhook[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class WebhookRepository extends ServiceEntityRepository
+class WebhookRepository extends ServiceEntityRepository implements \App\Domain\Webhook\WebhookRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

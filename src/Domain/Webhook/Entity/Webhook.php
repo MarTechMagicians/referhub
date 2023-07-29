@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Entity;
+namespace App\Domain\Webhook\Entity;
 
-use App\Repository\WebhookRepository;
+use App\Domain\User\Entity\User;
+use App\Infrastructure\Persistence\Doctrine\WebhookRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: WebhookRepository::class)]
