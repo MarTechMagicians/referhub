@@ -20,7 +20,7 @@ return $config
 
         'phpdoc_to_param_type' => true,
         'phpdoc_to_property_type' => true,
-        'phpdoc_to_return_type' => true,
+        'phpdoc_to_return_type' => false,
         'ordered_class_elements' => true,
 
         'yoda_style' => true,

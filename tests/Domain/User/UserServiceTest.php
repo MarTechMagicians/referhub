@@ -2,8 +2,11 @@
 
 namespace App\Tests\Domain\User;
 
+use App\Domain\User\CreateUser;
 use App\Domain\User\Entity\User;
+use App\Domain\User\Exceptions\UserAlreadyExistsException;
 use App\Domain\User\UserRepository;
+use App\Domain\User\UserService;
 use PHPUnit\Framework\TestCase;
 
 class UserServiceTest extends TestCase
@@ -21,7 +24,7 @@ class UserServiceTest extends TestCase
 
         $userRepository = $this->getMockBuilder(UserRepository::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['findOneBy'])
+            ->onlyMethods(['findOneBy', 'save'])
             ->getMock();
         $userRepository
             ->expects($this->once())
@@ -44,7 +47,7 @@ class UserServiceTest extends TestCase
 
         $userRepository = $this->getMockBuilder(UserRepository::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['save'])
+            ->onlyMethods(['save', 'findOneBy'])
             ->getMock();
         $userRepository
             ->expects($this->once())
