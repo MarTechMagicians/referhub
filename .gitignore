@@ -52,3 +52,4 @@
 /.web-server-pid
 
 .idea
+/docker/db/db_data
