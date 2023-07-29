@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Entity;
+namespace App\Domain\Referral\Entity;
 
-use App\Repository\ReferralRepository;
+use App\Domain\User\Entity\User;
+use App\Infrastructure\Persistence\Doctrine\ReferralRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ReferralRepository::class)]

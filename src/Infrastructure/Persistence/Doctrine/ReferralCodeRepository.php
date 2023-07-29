@@ -1,28 +1,28 @@
 <?php
 
-namespace App\Repository;
+namespace App\Infrastructure\Persistence\Doctrine;
 
-use App\Entity\Referral;
+use App\Domain\Referral\Entity\ReferralCode;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Referral>
+ * @extends ServiceEntityRepository<ReferralCode>
  *
- * @method Referral|null find($id, $lockMode = null, $lockVersion = null)
- * @method Referral|null findOneBy(array $criteria, array $orderBy = null)
- * @method Referral[]    findAll()
- * @method Referral[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method ReferralCode|null find($id, $lockMode = null, $lockVersion = null)
+ * @method ReferralCode|null findOneBy(array $criteria, array $orderBy = null)
+ * @method ReferralCode[]    findAll()
+ * @method ReferralCode[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ReferralRepository extends ServiceEntityRepository
+class ReferralCodeRepository extends ServiceEntityRepository implements \App\Domain\Referral\ReferralCodeRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Referral::class);
+        parent::__construct($registry, ReferralCode::class);
     }
 
     //    /**
-    //     * @return Referral[] Returns an array of Referral objects
+    //     * @return ReferralCode[] Returns an array of ReferralCode objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -36,7 +36,7 @@ class ReferralRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Referral
+    //    public function findOneBySomeField($value): ?ReferralCode
     //    {
     //        return $this->createQueryBuilder('r')
     //            ->andWhere('r.exampleField = :val')

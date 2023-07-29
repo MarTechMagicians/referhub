@@ -20,6 +20,24 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
+            Event:
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Domain/Event/Entity'
+                prefix: 'App\Domain\Event\Entity'
+            Referral:
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Domain/Referral/Entity'
+                prefix: 'App\Domain\Referral\Entity'
+            User:
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Domain/User/Entity'
+                prefix: 'App\Domain\User\Entity'
+            Webhook:
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Domain/Webhook/Entity'
+                prefix: 'App\Domain\Webhook\Entity'
+
+
 
 when@test:
     doctrine:

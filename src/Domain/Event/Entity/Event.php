@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Entity;
+namespace App\Domain\Event\Entity;
 
-use App\Repository\EventRepository;
+use App\Domain\Referral\Entity\ReferralCode;
+use App\Domain\User\Entity\User;
+use App\Infrastructure\Persistence\Doctrine\EventRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
