@@ -21,6 +21,12 @@ class ReferralCodeRepository extends ServiceEntityRepository implements \App\Dom
         parent::__construct($registry, ReferralCode::class);
     }
 
+    public function save(ReferralCode $referralCode): void
+    {
+        $this->getEntityManager()->persist($referralCode);
+        $this->getEntityManager()->flush();
+    }
+
     //    /**
     //     * @return ReferralCode[] Returns an array of ReferralCode objects
     //     */
