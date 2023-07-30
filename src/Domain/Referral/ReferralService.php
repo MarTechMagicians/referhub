@@ -41,6 +41,11 @@ class ReferralService
         return $referralCode;
     }
 
+    public function findReferralCode(string $code): ?ReferralCode
+    {
+        return $this->referralCodeRepository->findOneBy(['code' => $code]);
+    }
+
     public function trackReferralEvent(TrackReferralEvent $trackReferralEvent): Event
     {
         $referralCode = $this->referralCodeRepository->findOneBy(['code' => $trackReferralEvent->referralCode]);
