@@ -37,4 +37,13 @@ class UserService
     {
         return $this->userRepository->findAll();
     }
+
+    /**
+     * @param array<mixed>      $criteria
+     * @param array<mixed>|null $orderBy
+     */
+    public function findOneBy(array $criteria, array $orderBy = null): ?User
+    {
+        return $this->userRepository->findOneBy($criteria, $orderBy);
+    }
 }
