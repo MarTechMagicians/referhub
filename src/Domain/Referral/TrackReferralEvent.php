@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Domain\Event;
+namespace App\Domain\Referral;
 
-use App\Domain\Referral\Entity\ReferralCode;
 use App\Domain\User\UserIdentification;
 
-final readonly class CreateEvent
+final readonly class TrackReferralEvent
 {
     public function __construct(
         public string $eventType,
-        public ReferralCode $referralCode,
+        public string $referralCode,
         public UserIdentification $userIdentification
     ) {
     }

@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Domain\User;
+namespace App\Domain\Referral;
 
-final readonly class CreateUser
+use App\Domain\User\UserIdentification;
+
+final readonly class CreateReferralCode
 {
     public function __construct(
         public UserIdentification $userIdentification

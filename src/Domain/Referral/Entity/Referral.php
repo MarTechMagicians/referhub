@@ -36,9 +36,11 @@ class Referral
         return $this->referralCode;
     }
 
-    public function setReferralCode(ReferralCode $referralCode): void
+    public function setReferralCode(ReferralCode $referralCode): static
     {
         $this->referralCode = $referralCode;
+
+        return $this;
     }
 
     public function getReferredUser(): ?User
@@ -46,9 +48,11 @@ class Referral
         return $this->referredUser;
     }
 
-    public function setReferredUser(?User $referredUser): void
+    public function setReferredUser(?User $referredUser): static
     {
         $this->referredUser = $referredUser;
+
+        return $this;
     }
 
     public function getCreatorUser(): ?User
@@ -56,8 +60,10 @@ class Referral
         return $this->creatorUser;
     }
 
-    public function setCreatorUser(?User $creatorUser): void
+    public function setCreatorUser(?User $creatorUser): static
     {
         $this->creatorUser = $creatorUser;
+
+        return $this;
     }
 }

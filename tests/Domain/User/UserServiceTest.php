@@ -5,6 +5,7 @@ namespace App\Tests\Domain\User;
 use App\Domain\User\CreateUser;
 use App\Domain\User\Entity\User;
 use App\Domain\User\Exceptions\UserAlreadyExistsException;
+use App\Domain\User\UserIdentification;
 use App\Domain\User\UserRepository;
 use App\Domain\User\UserService;
 use PHPUnit\Framework\TestCase;
@@ -20,7 +21,7 @@ class UserServiceTest extends TestCase
             ->setIdentificationMethod('email')
             ->setIdentificationValue('john.doe@test.com');
 
-        $createUser = new CreateUser(identificationMethod: 'email', identificationValue: 'john.doe@test.com');
+        $createUser = new CreateUser(new UserIdentification(identificationMethod: 'email', identificationValue: 'john.doe@test.com'));
 
         $userRepository = $this->getMockBuilder(UserRepository::class)
             ->disableOriginalConstructor()
@@ -43,7 +44,7 @@ class UserServiceTest extends TestCase
             ->setIdentificationMethod('email')
             ->setIdentificationValue('john.doe@test.com');
 
-        $createUser = new CreateUser(identificationMethod: 'email', identificationValue: 'john.doe@test.com');
+        $createUser = new CreateUser(new UserIdentification(identificationMethod: 'email', identificationValue: 'john.doe@test.com'));
 
         $userRepository = $this->getMockBuilder(UserRepository::class)
             ->disableOriginalConstructor()

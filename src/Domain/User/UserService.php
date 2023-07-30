@@ -15,16 +15,16 @@ class UserService
     public function create(CreateUser $createUser): User
     {
         $currentUser = $this->userRepository->findOneBy([
-            'identificationMethod' => $createUser->identificationMethod,
-            'identificationValue' => $createUser->identificationValue,
+            'identificationMethod' => $createUser->userIdentification->identificationMethod,
+            'identificationValue' => $createUser->userIdentification->identificationValue,
         ]);
         if (null !== $currentUser) {
             throw new UserAlreadyExistsException();
         }
 
         $user = new User();
-        $user->setIdentificationValue($createUser->identificationValue);
-        $user->setIdentificationMethod($createUser->identificationMethod);
+        $user->setIdentificationValue($createUser->userIdentification->identificationValue);
+        $user->setIdentificationMethod($createUser->userIdentification->identificationMethod);
         $this->userRepository->save($user);
 
         return $user;

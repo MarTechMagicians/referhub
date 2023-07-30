@@ -8,6 +8,7 @@ use App\Domain\Event\EventRepository;
 use App\Domain\Event\EventService;
 use App\Domain\Referral\Entity\ReferralCode;
 use App\Domain\User\Entity\User;
+use App\Domain\User\UserIdentification;
 use App\Domain\User\UserService;
 use PHPUnit\Framework\TestCase;
 
@@ -25,8 +26,10 @@ class EventServiceTest extends TestCase
         $createEvent = new CreateEvent(
             eventType: $eventType,
             referralCode: $referralCode,
-            userIdentificationMethod: 'email',
-            userIdentificationValue: $referredUserEmail
+            userIdentification: new UserIdentification(
+                identificationMethod: 'email',
+                identificationValue: $referredUserEmail
+            )
         );
 
         $expectedUser = new User();

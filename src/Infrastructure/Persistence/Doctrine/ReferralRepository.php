@@ -21,6 +21,12 @@ class ReferralRepository extends ServiceEntityRepository implements \App\Domain\
         parent::__construct($registry, Referral::class);
     }
 
+    public function save(Referral $referral): void
+    {
+        $this->getEntityManager()->persist($referral);
+        $this->getEntityManager()->flush();
+    }
+
     //    /**
     //     * @return Referral[] Returns an array of Referral objects
     //     */

@@ -17,13 +17,12 @@ class EventService
     public function createEvent(CreateEvent $createEvent): Event
     {
         $referredUser = $this->userService->findOneBy([
-            'identificationMethod' => $createEvent->userIdentificationMethod,
-            'identificationValue' => $createEvent->userIdentificationValue,
+            'identificationMethod' => $createEvent->userIdentification->identificationMethod,
+            'identificationValue' => $createEvent->userIdentification->identificationValue,
         ]);
         if (null === $referredUser) {
             $referredUser = $this->userService->create(new CreateUser(
-                identificationMethod: $createEvent->userIdentificationMethod,
-                identificationValue: $createEvent->userIdentificationValue
+                $createEvent->userIdentification
             ));
         }
 
