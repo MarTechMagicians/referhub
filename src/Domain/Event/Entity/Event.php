@@ -82,9 +82,11 @@ class Event
         return $this->creatorUser;
     }
 
-    public function setCreatorUser(?User $creatorUser): void
+    public function setCreatorUser(?User $creatorUser): static
     {
         $this->creatorUser = $creatorUser;
+
+        return $this;
     }
 
     /**

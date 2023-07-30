@@ -21,6 +21,12 @@ class EventRepository extends ServiceEntityRepository implements \App\Domain\Eve
         parent::__construct($registry, Event::class);
     }
 
+    public function save(Event $event): void
+    {
+        $this->getEntityManager()->persist($event);
+        $this->getEntityManager()->flush();
+    }
+
     //    /**
     //     * @return Event[] Returns an array of Event objects
     //     */
