@@ -8,6 +8,7 @@ use App\Domain\Event\EventService;
 use App\Domain\Referral\CreateReferralCode;
 use App\Domain\Referral\Entity\Referral;
 use App\Domain\Referral\Entity\ReferralCode;
+use App\Domain\Referral\Exceptions\InvalidReferralCode;
 use App\Domain\Referral\ReferralCodeGenerator;
 use App\Domain\Referral\ReferralCodeRepository;
 use App\Domain\Referral\ReferralRepository;
@@ -162,5 +163,27 @@ class ReferralServiceTest extends TestCase
 
         $actualEvent = $referralService->trackReferralEvent($trackEvent);
         $this->assertEquals($expectedEvent, $actualEvent);
+    }
+
+    public function testReferralTrackingWithInvalidCode(): void
+    {
+        $this->expectException(InvalidReferralCode::class);
+
+        $referralService = new ReferralService(
+            userService: $this->createMock(UserService::class),
+            referralCodeGenerator: $this->createMock(ReferralCodeGenerator::class),
+            referralCodeRepository: $this->createMock(ReferralCodeRepository::class),
+            eventService: $this->createMock(EventService::class),
+            referralRepository: $this->createMock(ReferralRepository::class)
+        );
+
+        $referralService->trackReferralEvent(new TrackReferralEvent(
+            eventType: 'Sign Up',
+            referralCode: '123',
+            userIdentification: new UserIdentification(
+                identificationMethod: 'email',
+                identificationValue: 'john.doe@test.com'
+            )
+        ));
     }
 }
