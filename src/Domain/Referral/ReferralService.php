@@ -10,6 +10,8 @@ use App\Domain\Referral\Entity\ReferralCode;
 use App\Domain\Referral\Exceptions\InvalidReferralCode;
 use App\Domain\User\CreateUser;
 use App\Domain\User\UserService;
+use App\Domain\Webhook\TriggerWebhooks;
+use App\Domain\Webhook\WebhookService;
 
 class ReferralService
 {
@@ -18,7 +20,8 @@ class ReferralService
         private readonly ReferralCodeGenerator $referralCodeGenerator,
         private readonly ReferralCodeRepository $referralCodeRepository,
         private readonly EventService $eventService,
-        private readonly ReferralRepository $referralRepository
+        private readonly ReferralRepository $referralRepository,
+        private readonly WebhookService $webhookService
     ) {
     }
 
@@ -63,10 +66,15 @@ class ReferralService
             ->setReferredUser($referredUser);
         $this->referralRepository->save($referral);
 
-        return $this->eventService->createEvent(new CreateEvent(
+        $event = $this->eventService->createEvent(new CreateEvent(
             eventType: $trackReferralEvent->eventType,
             referralCode: $referralCode,
             userIdentification: $trackReferralEvent->userIdentification
         ));
+
+        // TODO call this with messenger later.
+        $this->webhookService->triggerWebhooks(new TriggerWebhooks(trackEvent: $event));
+
+        return $event;
     }
 }
