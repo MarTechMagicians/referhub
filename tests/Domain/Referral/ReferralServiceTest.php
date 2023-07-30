@@ -18,6 +18,8 @@ use App\Domain\User\CreateUser;
 use App\Domain\User\Entity\User;
 use App\Domain\User\UserIdentification;
 use App\Domain\User\UserService;
+use App\Domain\Webhook\TriggerWebhooks;
+use App\Domain\Webhook\WebhookService;
 use PHPUnit\Framework\TestCase;
 
 class ReferralServiceTest extends TestCase
@@ -65,7 +67,8 @@ class ReferralServiceTest extends TestCase
             referralCodeGenerator: $referralCodeGenerator,
             referralCodeRepository: $this->createMock(ReferralCodeRepository::class),
             eventService: $this->createMock(EventService::class),
-            referralRepository: $this->createMock(ReferralRepository::class)
+            referralRepository: $this->createMock(ReferralRepository::class),
+            webhookService: $this->createMock(WebhookService::class)
         );
         $referralCode = $referralService->createReferralCode($createReferralCode);
 
@@ -153,12 +156,22 @@ class ReferralServiceTest extends TestCase
             ->method('save')
             ->with($expectedReferral);
 
+        $webhookService = $this->getMockBuilder(WebhookService::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['triggerWebhooks'])
+            ->getMockForAbstractClass();
+        $webhookService
+            ->expects($this->once())
+            ->method('triggerWebhooks')
+            ->with(new TriggerWebhooks(trackEvent: $expectedEvent));
+
         $referralService = new ReferralService(
             userService: $userService,
             referralCodeGenerator: $this->createMock(ReferralCodeGenerator::class),
             referralCodeRepository: $referralCodeRepository,
             eventService: $eventService,
-            referralRepository: $referralRepo
+            referralRepository: $referralRepo,
+            webhookService: $webhookService
         );
 
         $actualEvent = $referralService->trackReferralEvent($trackEvent);
@@ -174,7 +187,8 @@ class ReferralServiceTest extends TestCase
             referralCodeGenerator: $this->createMock(ReferralCodeGenerator::class),
             referralCodeRepository: $this->createMock(ReferralCodeRepository::class),
             eventService: $this->createMock(EventService::class),
-            referralRepository: $this->createMock(ReferralRepository::class)
+            referralRepository: $this->createMock(ReferralRepository::class),
+            webhookService: $this->createMock(WebhookService::class)
         );
 
         $referralService->trackReferralEvent(new TrackReferralEvent(

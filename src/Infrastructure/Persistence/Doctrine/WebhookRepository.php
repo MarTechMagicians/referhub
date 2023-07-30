@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\Persistence\Doctrine;
 
+use App\Domain\Referral\Entity\ReferralCode;
 use App\Domain\Webhook\Entity\Webhook;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,6 +20,17 @@ class WebhookRepository extends ServiceEntityRepository implements \App\Domain\W
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Webhook::class);
+    }
+
+    public function save(Webhook $webhook): void
+    {
+        $this->getEntityManager()->persist($webhook);
+        $this->getEntityManager()->flush();
+    }
+
+    public function findByReferralCode(ReferralCode $referralCode): array
+    {
+        return $this->findBy(['referralCode' => $referralCode]);
     }
 
     //    /**
