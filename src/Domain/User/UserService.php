@@ -46,4 +46,22 @@ class UserService
     {
         return $this->userRepository->findOneBy($criteria, $orderBy);
     }
+
+    public function findByUserIdentification(UserIdentification $userIdentification): ?User
+    {
+        return $this->findOneBy([
+            'identificationMethod' => $userIdentification->identificationMethod,
+            'identificationValue' => $userIdentification->identificationValue,
+        ]);
+    }
+
+    public function findOrCreate(CreateUser $createUser): User
+    {
+        $user = $this->findByUserIdentification($createUser->userIdentification);
+        if (null !== $user) {
+            return $user;
+        }
+
+        return $this->create($createUser);
+    }
 }

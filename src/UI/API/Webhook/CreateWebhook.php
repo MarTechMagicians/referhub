@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Domain\Webhook;
-
-use App\Domain\Referral\Entity\ReferralCode;
+namespace App\UI\API\Webhook;
 
 final readonly class CreateWebhook
 {
@@ -10,7 +8,7 @@ final readonly class CreateWebhook
      * @param string[] $eventTypes
      */
     public function __construct(
-        public ReferralCode $referralCode,
+        public string $referralCode,
         public string $url,
         public string $method,
         public array $eventTypes
