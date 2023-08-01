@@ -52,11 +52,11 @@ ReferHub is a modular and composable referral software designed to generate and 
 
 ## Usage
 
-Refer to the API documentation for details on interacting with ReferHub via CLI, REST, or Batch APIs.
+Refer to the [API documentation](doc/API%20Specifications.md) for details on interacting with ReferHub via REST API.
 
 ## Contributing
 
-We welcome contributions! Please see the `CONTRIBUTING.md` file for guidelines on how to contribute.
+We welcome contributions!
 
 ## Support
 
