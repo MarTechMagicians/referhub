@@ -87,7 +87,7 @@ class ReferralServiceTest extends TestCase
 
         $userService = $this->getMockBuilder(UserService::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['create'])
+            ->onlyMethods(['findOrCreate'])
             ->getMockForAbstractClass();
         $userIdentification = new UserIdentification(
             identificationMethod: $identificationMethod,
@@ -95,7 +95,7 @@ class ReferralServiceTest extends TestCase
         );
         $userService
             ->expects($this->once())
-            ->method('create')
+            ->method('findOrCreate')
             ->with(new CreateUser(userIdentification: $userIdentification))
             ->willReturn($referredUser);
 

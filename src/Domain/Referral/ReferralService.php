@@ -56,8 +56,7 @@ class ReferralService
             throw new InvalidReferralCode();
         }
 
-        // TODO create a "findOrCreate" method in user service and use it here
-        $referredUser = $this->userService->create(new CreateUser($trackReferralEvent->userIdentification));
+        $referredUser = $this->userService->findOrCreate(new CreateUser($trackReferralEvent->userIdentification));
 
         $referral = new Referral();
         $referral
