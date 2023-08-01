@@ -16,15 +16,7 @@ class EventService
 
     public function createEvent(CreateEvent $createEvent): Event
     {
-        $referredUser = $this->userService->findOneBy([
-            'identificationMethod' => $createEvent->userIdentification->identificationMethod,
-            'identificationValue' => $createEvent->userIdentification->identificationValue,
-        ]);
-        if (null === $referredUser) {
-            $referredUser = $this->userService->create(new CreateUser(
-                $createEvent->userIdentification
-            ));
-        }
+        $referredUser = $this->userService->findOrCreate(new CreateUser($createEvent->userIdentification));
 
         $event = new Event();
         $event

@@ -4,8 +4,6 @@ namespace App\Domain\Webhook;
 
 use App\Domain\Event\Entity\Event;
 use App\Domain\Referral\Entity\ReferralCode;
-use App\Domain\Referral\Exceptions\InvalidReferralCode;
-use App\Domain\Referral\ReferralService;
 use App\Domain\Webhook\Entity\Webhook;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -14,25 +12,19 @@ class WebhookService
 {
     public function __construct(
         private readonly WebhookRepository $webhookRepository,
-        private readonly ReferralService $referralService,
         private readonly HttpClientInterface $httpClient
     ) {
     }
 
     public function create(CreateWebhook $createWebhook): Webhook
     {
-        $referralCode = $this->referralService->findReferralCode($createWebhook->referralCode);
-        if (null === $referralCode) {
-            throw new InvalidReferralCode();
-        }
-
         $webhook = new Webhook();
         $webhook
-            ->setCreatorUser($referralCode->getCreatorUser())
+            ->setCreatorUser($createWebhook->referralCode->getCreatorUser())
             ->setMethod($createWebhook->method)
             ->setUrl($createWebhook->url)
             ->setEventTypes($createWebhook->eventTypes)
-            ->setReferralCode($referralCode);
+            ->setReferralCode($createWebhook->referralCode);
 
         $this->webhookRepository->save($webhook);
 

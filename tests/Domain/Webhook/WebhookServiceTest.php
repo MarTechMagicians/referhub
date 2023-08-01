@@ -5,7 +5,6 @@ namespace App\Tests\Domain\Webhook;
 use App\Domain\Event\Entity\Event;
 use App\Domain\Referral\Entity\Referral;
 use App\Domain\Referral\Entity\ReferralCode;
-use App\Domain\Referral\ReferralService;
 use App\Domain\User\Entity\User;
 use App\Domain\Webhook\CreateWebhook;
 use App\Domain\Webhook\Entity\Webhook;
@@ -41,18 +40,8 @@ class WebhookServiceTest extends TestCase
             ->method('save')
             ->with($expectedWebhook);
 
-        $referralService = $this->getMockBuilder(ReferralService::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['findReferralCode'])
-            ->getMockForAbstractClass();
-        $referralService
-            ->expects($this->once())
-            ->method('findReferralCode')
-            ->with('123')
-            ->willReturn($expectedReferralCode);
-
         $createWebhook = new CreateWebhook(
-            referralCode: '123',
+            referralCode: $expectedReferralCode,
             url: 'google.com',
             method: 'GET',
             eventTypes: ['Sign Up', 'Purchase']
@@ -60,7 +49,6 @@ class WebhookServiceTest extends TestCase
 
         $webhookService = new WebhookService(
             webhookRepository: $webhookRepo,
-            referralService: $referralService,
             httpClient: $this->createMock(HttpClientInterface::class)
         );
         $actualWebhook = $webhookService->create($createWebhook);
@@ -87,7 +75,6 @@ class WebhookServiceTest extends TestCase
 
         $webhookService = new WebhookService(
             webhookRepository: $webhookRepo,
-            referralService: $this->createMock(ReferralService::class),
             httpClient: $this->createMock(HttpClientInterface::class)
         );
         $this->assertEquals([$webhook1, $webhook2], $webhookService->findByReferralCode($referralCode));
@@ -153,7 +140,6 @@ class WebhookServiceTest extends TestCase
 
         $webhookService = new WebhookService(
             webhookRepository: $webhookRepository,
-            referralService: $this->createMock(ReferralService::class),
             httpClient: $httpClient
         );
         $webhookService->triggerWebhooks(new TriggerWebhooks(

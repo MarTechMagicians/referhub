@@ -99,4 +99,39 @@ class UserServiceTest extends TestCase
         $userService = new UserService($userRepo);
         $this->assertEquals($user, $userService->findOneBy(['identificationMethod' => 'email', 'identificationValue' => 'john.doe@test.com']));
     }
+
+    public function testFindOrCreate(): void
+    {
+        $identification = new UserIdentification(
+            identificationMethod: 'email',
+            identificationValue: 'john.doe@test.com'
+        );
+
+        $expectedUser = new User();
+        $expectedUser
+            ->setIdentificationMethod($identification->identificationMethod)
+            ->setIdentificationValue($identification->identificationValue);
+
+        $userRepo = $this->getMockBuilder(UserRepository::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['findOneBy', 'save'])
+            ->getMockForAbstractClass();
+
+        $userRepo
+            ->expects($this->exactly(3))
+            ->method('findOneBy')
+            ->with(['identificationMethod' => $identification->identificationMethod, 'identificationValue' => $identification->identificationValue])
+            ->willReturnOnConsecutiveCalls(null, null, $expectedUser);
+
+        $userRepo
+            ->expects($this->once())
+            ->method('save')
+            ->with($expectedUser);
+
+        $userService = new UserService($userRepo);
+        $actualUser1 = $userService->findOrCreate(new CreateUser($identification));
+        $actualUser2 = $userService->findOrCreate(new CreateUser($identification));
+        $this->assertEquals($expectedUser, $actualUser1);
+        $this->assertEquals($expectedUser, $actualUser2);
+    }
 }

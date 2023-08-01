@@ -43,8 +43,8 @@ class ReferralServiceTest extends TestCase
             ->getMock();
         $userService
             ->expects($this->once())
-            ->method('create')
-            ->with(new CreateUser(new UserIdentification(identificationMethod: $createReferralCode->userIdentification->identificationMethod, identificationValue: $createReferralCode->userIdentification->identificationValue)))
+            ->method('findOrCreate')
+            ->with(new CreateUser($createReferralCode->userIdentification))
             ->willReturn($expectedUser);
 
         $expectedReferralCode = new ReferralCode();
@@ -72,7 +72,7 @@ class ReferralServiceTest extends TestCase
         );
         $referralCode = $referralService->createReferralCode($createReferralCode);
 
-        $this->assertEquals($referralCode, $expectedReferralCode);
+        $this->assertEquals($expectedReferralCode, $referralCode);
     }
 
     public function testSuccessfulReferralTracking(): void

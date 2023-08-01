@@ -28,7 +28,7 @@ class ReferralService
     public function createReferralCode(CreateReferralCode $createReferralCode): ReferralCode
     {
         // TODO create a "findOrCreate" method in user service and use it here
-        $referralUser = $this->userService->create(new CreateUser(
+        $referralUser = $this->userService->findOrCreate(new CreateUser(
             $createReferralCode->userIdentification
         ));
 
