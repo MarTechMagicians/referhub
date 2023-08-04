@@ -1,4 +1,6 @@
 {
+    "name": "martechmagicians/referhub",
+    "description": "ReferHub is a modular and composable referral system, designed to seamlessly generate and track referral codes for users. With support for various identification methods and a flexible event-tracking system, ReferHub provides an extensible solution for managing referrals across different platforms. Its event-driven architecture enables webhook integrations, making it adaptable to diverse use cases. Whether you're implementing a user sign-up referral program or tracking purchases, ReferHub offers a robust and maintainable foundation. Built with DDD and TDD principles, it emphasizes quality, scalability, and ease of integration. Ideal for developers seeking a referral solution that can be effortlessly embedded into existing systems or customized to specific needs.",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
